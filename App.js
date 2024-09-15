@@ -2,7 +2,20 @@ import { StatusBar } from "expo-status-bar";
 import { Button, StyleSheet, View } from "react-native";
 import * as Notifications from "expo-notifications";
 
+// First, set the handler that will cause the notification
+// to show the alert
+Notifications.setNotificationHandler({
+  handleNotification: async () => {
+    return {
+      shouldShowAlert: true,
+      shouldPlaySound: false,
+      shouldSetBadge: false,
+    };
+  },
+});
+
 export default function App() {
+  // Second, call the method
   function scheduleNotificationHandler() {
     Notifications.scheduleNotificationAsync({
       content: {
