@@ -17,14 +17,24 @@ Notifications.setNotificationHandler({
 
 export default function App() {
   useEffect(() => {
-    const subscription = Notifications.addNotificationReceivedListener(
+    const subscription1 = Notifications.addNotificationReceivedListener(
       (notification) => {
         console.log("notification");
-        console.log(notification);
         console.log(JSON.stringify(notification, null, 2));
       }
     );
-    return () => subscription.remove();
+
+    const subscription2 = Notifications.addNotificationResponseReceivedListener(
+      (response) => {
+        console.log("response");
+        console.log(JSON.stringify(response, null, 2));
+      }
+    );
+
+    return () => {
+      subscription1.remove();
+      subscription2.remove();
+    };
   }, []);
 
   // Second, call the method
