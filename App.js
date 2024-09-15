@@ -1,6 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import { Button, StyleSheet, View } from "react-native";
 import * as Notifications from "expo-notifications";
+import { useEffect } from "react";
 
 // First, set the handler that will cause the notification
 // to show the alert
@@ -15,6 +16,17 @@ Notifications.setNotificationHandler({
 });
 
 export default function App() {
+  useEffect(() => {
+    const subscription = Notifications.addNotificationReceivedListener(
+      (notification) => {
+        console.log("notification");
+        console.log(notification);
+        console.log(JSON.stringify(notification, null, 2));
+      }
+    );
+    return () => subscription.remove();
+  }, []);
+
   // Second, call the method
   function scheduleNotificationHandler() {
     Notifications.scheduleNotificationAsync({
